@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(./gradlew compileJava --console=plain)",
+      "PowerShell(.\\\\gradlew.bat compileJava --console=plain)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\hhj48\\\\.jdks\\\\temurin-17.0.19\"; $env:Path = \"$env:JAVA_HOME\\\\bin;$env:Path\"; .\\\\gradlew.bat compileJava --console=plain)"
+    ]
+  }
+}
