@@ -74,6 +74,29 @@ public class AuthService {
         return TeacherDto.from(teacher);
     }
 
+    public LoginResponse refresh(String refreshToken) {
+        if (!jwtProvider.validateToken(refreshToken)) {
+            throw new BusinessException(ErrorCode.INVALID_TOKEN);
+        }
+
+        if (!jwtProvider.isRefreshToken(refreshToken)) {
+            log.warn("Access Token으로 refresh API 호출 시도");
+            throw new BusinessException(ErrorCode.INVALID_TOKEN, "Refresh Token이 아닙니다");
+        }
+
+        Long teacherId = jwtProvider.getTeacherId(refreshToken);
+
+        Teacher teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(() -> {
+                    log.warn("Refresh Token의 teacherId가 DB에 없음: teacherId={}", teacherId);
+                    return new BusinessException(ErrorCode.TEACHER_NOT_FOUND);
+                });
+
+        log.info("토큰 갱신: teacherId={}, email={}", teacherId, teacher.getEmail());
+
+        return issueTokens(teacher);
+    }
+
     private LoginResponse issueTokens(Teacher teacher) {
         String accessToken = jwtProvider.createAccessToken(
                 teacher.getId(),

@@ -2,6 +2,7 @@ package com.abc.behaviortracker.auth.controller;
 
 import com.abc.behaviortracker.auth.dto.LoginRequest;
 import com.abc.behaviortracker.auth.dto.LoginResponse;
+import com.abc.behaviortracker.auth.dto.RefreshRequest;
 import com.abc.behaviortracker.auth.dto.SignupRequest;
 import com.abc.behaviortracker.auth.dto.TeacherDto;
 import com.abc.behaviortracker.auth.service.AuthService;
@@ -49,6 +50,14 @@ public class AuthController {
     @GetMapping("/me")
     public ApiResponse<TeacherDto> getMe(@AuthenticationPrincipal AuthPrincipal principal) {
         TeacherDto result = authService.getMe(principal.teacherId());
+        return ApiResponse.ok(result);
+    }
+
+    @Operation(summary = "토큰 갱신",
+            description = "Refresh Token으로 새 Access Token과 Refresh Token을 발급받습니다.")
+    @PostMapping("/refresh")
+    public ApiResponse<LoginResponse> refresh(@Valid @RequestBody RefreshRequest request) {
+        LoginResponse result = authService.refresh(request.refreshToken());
         return ApiResponse.ok(result);
     }
 }
