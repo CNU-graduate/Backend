@@ -31,7 +31,11 @@ public enum ErrorCode {
     SESSION_NOT_FOUND(HttpStatus.NOT_FOUND, "SESSION_NOT_FOUND", "해당 기록 세션을 찾을 수 없습니다"),
     ACTIVE_SESSION_EXISTS(HttpStatus.CONFLICT, "ACTIVE_SESSION_EXISTS", "이미 진행 중인 기록 세션이 있습니다"),
     INVALID_SESSION_STATE(HttpStatus.CONFLICT, "INVALID_SESSION_STATE", "현재 상태에서 수행할 수 없는 작업입니다"),
-    RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "RECORD_NOT_FOUND", "해당 행동 기록을 찾을 수 없습니다");
+    RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "RECORD_NOT_FOUND", "해당 행동 기록을 찾을 수 없습니다"),
+
+    // ===== Session Media (US-07) =====
+    SESSION_MEDIA_NOT_FOUND(HttpStatus.NOT_FOUND, "SESSION_MEDIA_NOT_FOUND", "해당 미디어를 찾을 수 없습니다"),
+    SESSION_MEDIA_ALREADY_EXISTS(HttpStatus.CONFLICT, "SESSION_MEDIA_ALREADY_EXISTS", "해당 종류의 미디어가 이미 등록되어 있습니다");
 
     private final HttpStatus status;
     private final String code;
