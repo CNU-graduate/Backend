@@ -31,7 +31,12 @@ public enum ErrorCode {
     SESSION_NOT_FOUND(HttpStatus.NOT_FOUND, "SESSION_NOT_FOUND", "해당 기록 세션을 찾을 수 없습니다"),
     ACTIVE_SESSION_EXISTS(HttpStatus.CONFLICT, "ACTIVE_SESSION_EXISTS", "이미 진행 중인 기록 세션이 있습니다"),
     INVALID_SESSION_STATE(HttpStatus.CONFLICT, "INVALID_SESSION_STATE", "현재 상태에서 수행할 수 없는 작업입니다"),
-    RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "RECORD_NOT_FOUND", "해당 행동 기록을 찾을 수 없습니다");
+    RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "RECORD_NOT_FOUND", "해당 행동 기록을 찾을 수 없습니다"),
+
+    // ===== ABC (US-09) =====
+    ABC_RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "ABC_RECORD_NOT_FOUND", "ABC 기록을 찾을 수 없습니다"),
+    ABC_RECORD_ALREADY_EXISTS(HttpStatus.CONFLICT, "ABC_RECORD_ALREADY_EXISTS", "해당 세션에 이미 ABC 기록이 존재합니다"),
+    INVALID_SESSION_STATE_FOR_ABC(HttpStatus.CONFLICT, "INVALID_SESSION_STATE_FOR_ABC", "ABC 입력이 불가능한 세션 상태입니다");
 
     private final HttpStatus status;
     private final String code;

@@ -86,18 +86,24 @@ public class RecordSession extends BaseEntity {
     }
 
     public void markCompleted() {
-        if (this.status != SessionStatus.ENDED) {
+        if (this.status == SessionStatus.COMPLETED) {
+            return;
+        }
+        if (this.status != SessionStatus.ENDED && this.status != SessionStatus.INCOMPLETE) {
             throw new IllegalStateException(
-                    "ENDED 상태에서만 완료 처리 가능합니다. 현재 상태: " + this.status
+                    "ENDED 또는 INCOMPLETE 상태에서만 완료 처리 가능합니다. 현재 상태: " + this.status
             );
         }
         this.status = SessionStatus.COMPLETED;
     }
 
     public void markIncomplete() {
-        if (this.status != SessionStatus.ENDED) {
+        if (this.status == SessionStatus.INCOMPLETE) {
+            return;
+        }
+        if (this.status != SessionStatus.ENDED && this.status != SessionStatus.COMPLETED) {
             throw new IllegalStateException(
-                    "ENDED 상태에서만 미완료 처리 가능합니다. 현재 상태: " + this.status
+                    "ENDED 또는 COMPLETED 상태에서만 미완료 처리 가능합니다. 현재 상태: " + this.status
             );
         }
         this.status = SessionStatus.INCOMPLETE;
