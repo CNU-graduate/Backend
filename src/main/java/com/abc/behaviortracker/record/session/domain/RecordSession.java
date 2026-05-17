@@ -65,6 +65,9 @@ public class RecordSession extends BaseEntity {
     @Column(name = "media_assisted", nullable = false)
     private boolean mediaAssisted;
 
+    @Column(name = "memo", length = 2000)
+    private String memo;
+
     @Builder
     private RecordSession(Teacher teacher, Student student, TriggerType triggerType, boolean mediaAssisted) {
         this.teacher = teacher;
@@ -109,6 +112,10 @@ public class RecordSession extends BaseEntity {
         }
         this.endedAt = lastValidAt != null ? lastValidAt : Instant.now();
         this.status = SessionStatus.ABANDONED;
+    }
+
+    public void updateMemo(String memo) {
+        this.memo = memo;
     }
 
     public void delete() {
