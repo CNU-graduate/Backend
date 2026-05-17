@@ -1,10 +1,10 @@
-package com.abc.behaviortracker.record.abc;
+package com.abc.behaviortracker.record.abc.service;
 
 import com.abc.behaviortracker.global.exception.BusinessException;
 import com.abc.behaviortracker.global.exception.ErrorCode;
 import com.abc.behaviortracker.global.exception.ForbiddenAccessException;
 import com.abc.behaviortracker.record.abc.domain.AbcRecord;
-import com.abc.behaviortracker.record.abc.domain.AbcRecordRepository;
+import com.abc.behaviortracker.record.abc.repository.AbcRecordRepository;
 import com.abc.behaviortracker.record.abc.dto.AbcCreateRequest;
 import com.abc.behaviortracker.record.abc.dto.AbcResponse;
 import com.abc.behaviortracker.record.abc.dto.AbcUpdateRequest;

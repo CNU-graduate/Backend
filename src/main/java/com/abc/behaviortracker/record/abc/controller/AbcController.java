@@ -1,10 +1,11 @@
-package com.abc.behaviortracker.record.abc;
+package com.abc.behaviortracker.record.abc.controller;
 
 import com.abc.behaviortracker.global.common.ApiResponse;
 import com.abc.behaviortracker.global.security.AuthPrincipal;
 import com.abc.behaviortracker.record.abc.dto.AbcCreateRequest;
 import com.abc.behaviortracker.record.abc.dto.AbcResponse;
 import com.abc.behaviortracker.record.abc.dto.AbcUpdateRequest;
+import com.abc.behaviortracker.record.abc.service.AbcService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
