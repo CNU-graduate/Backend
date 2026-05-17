@@ -40,7 +40,12 @@ public enum ErrorCode {
     // ===== ABC (US-09) =====
     ABC_RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "ABC_RECORD_NOT_FOUND", "ABC 기록을 찾을 수 없습니다"),
     ABC_RECORD_ALREADY_EXISTS(HttpStatus.CONFLICT, "ABC_RECORD_ALREADY_EXISTS", "해당 세션에 이미 ABC 기록이 존재합니다"),
-    INVALID_SESSION_STATE_FOR_ABC(HttpStatus.CONFLICT, "INVALID_SESSION_STATE_FOR_ABC", "ABC 입력이 불가능한 세션 상태입니다");
+    INVALID_SESSION_STATE_FOR_ABC(HttpStatus.CONFLICT, "INVALID_SESSION_STATE_FOR_ABC", "ABC 입력이 불가능한 세션 상태입니다"),
+
+    // ===== Weather (US-17) =====
+    WEATHER_FETCH_FAILED(HttpStatus.BAD_GATEWAY, "WEATHER_FETCH_FAILED", "날씨 정보를 가져오지 못했습니다"),
+    WEATHER_SNAPSHOT_NOT_FOUND(HttpStatus.NOT_FOUND, "WEATHER_SNAPSHOT_NOT_FOUND", "해당 세션의 날씨 정보를 찾을 수 없습니다"),
+    WEATHER_SNAPSHOT_ALREADY_EXISTS(HttpStatus.CONFLICT, "WEATHER_SNAPSHOT_ALREADY_EXISTS", "해당 세션에 이미 날씨 정보가 등록되어 있습니다");
 
     private final HttpStatus status;
     private final String code;
