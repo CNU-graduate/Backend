@@ -61,7 +61,7 @@ public class Student extends BaseEntity {
     @Type(JsonBinaryType.class)
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "metadata", columnDefinition = "jsonb")
-    private Map<String, Object> metadata = new HashMap<>();
+    private Map<String, Object> metadata;
 
     @Builder
     private Student(Teacher teacher, String name, Integer grade, LocalDate birthDate,
@@ -71,7 +71,7 @@ public class Student extends BaseEntity {
         this.grade = grade;
         this.birthDate = birthDate;
         this.iepSummary = iepSummary;
-        this.metadata = metadata != null ? new HashMap<>(metadata) : new HashMap<>();
+        this.metadata = (metadata == null || metadata.isEmpty()) ? null : new HashMap<>(metadata);
     }
 
     public void update(Integer grade, String iepSummary, Map<String, Object> metadata) {
@@ -82,7 +82,7 @@ public class Student extends BaseEntity {
             this.iepSummary = iepSummary;
         }
         if (metadata != null) {
-            this.metadata = new HashMap<>(metadata);
+            this.metadata = metadata.isEmpty() ? null : new HashMap<>(metadata);
         }
     }
 
