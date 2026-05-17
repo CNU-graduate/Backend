@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,5 +62,16 @@ public class AbcController {
     ) {
         AbcResponse response = abcService.update(sessionId, principal.teacherId(), request);
         return ResponseEntity.ok(ApiResponse.ok(response));
+    }
+
+    @Operation(summary = "ABC 기록 삭제",
+            description = "ABC 기록을 Soft Delete합니다. 삭제 후 세션 상태는 ENDED로 되돌아가며, 동일 세션에 ABC 재입력이 가능합니다.")
+    @DeleteMapping
+    public ResponseEntity<ApiResponse<Void>> delete(
+            @PathVariable Long sessionId,
+            @AuthenticationPrincipal AuthPrincipal principal
+    ) {
+        abcService.delete(sessionId, principal.teacherId());
+        return ResponseEntity.ok(ApiResponse.ok());
     }
 }

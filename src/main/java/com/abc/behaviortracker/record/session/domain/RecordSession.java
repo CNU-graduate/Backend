@@ -109,6 +109,18 @@ public class RecordSession extends BaseEntity {
         this.status = SessionStatus.INCOMPLETE;
     }
 
+    public void revertToEnded() {
+        if (this.status == SessionStatus.ENDED) {
+            return;  // 멱등
+        }
+        if (this.status != SessionStatus.COMPLETED && this.status != SessionStatus.INCOMPLETE) {
+            throw new IllegalStateException(
+                    "COMPLETED 또는 INCOMPLETE 상태에서만 ENDED로 되돌릴 수 있습니다. 현재 상태: " + this.status
+            );
+        }
+        this.status = SessionStatus.ENDED;
+    }
+
     public void abandon(Instant lastValidAt) {
         if (this.status.isTerminal()) {
             return;

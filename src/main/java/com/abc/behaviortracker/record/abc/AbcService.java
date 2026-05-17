@@ -111,6 +111,33 @@ public class AbcService {
         return AbcResponse.from(abcRecord);
     }
 
+    @Transactional
+    public void delete(Long sessionId, Long teacherId) {
+        // 1. 세션 권한 체크
+        RecordSession session = findSessionOwnedBy(sessionId, teacherId);
+
+        // 2. 세션 상태 체크: ENDED, COMPLETED, INCOMPLETE만 허용
+        SessionStatus status = session.getStatus();
+        if (status != SessionStatus.ENDED
+                && status != SessionStatus.COMPLETED
+                && status != SessionStatus.INCOMPLETE) {
+            throw new InvalidSessionStateForAbcException(status);
+        }
+
+        // 3. ABC 조회
+        AbcRecord abcRecord = abcRecordRepository.findBySessionId(sessionId)
+                .orElseThrow(AbcRecordNotFoundException::new);
+
+        // 4. Soft Delete
+        abcRecord.delete();
+
+        // 5. 세션 상태를 ENDED로 복귀 (이후 POST 재허용)
+        session.revertToEnded();
+
+        log.info("ABC 삭제: sessionId={}, teacherId={}, abcRecordId={}, sessionStatus={}",
+                sessionId, teacherId, abcRecord.getId(), session.getStatus());
+    }
+
     private RecordSession findSessionOwnedBy(Long sessionId, Long teacherId) {
         RecordSession session = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new BusinessException(
