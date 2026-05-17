@@ -10,7 +10,8 @@
       "PowerShell(Get-ChildItem *)",
       "PowerShell(Test-Path *)",
       "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\hhj48\\\\.jdks\\\\temurin-17.0.19\"; $env:PATH = \"$env:JAVA_HOME\\\\bin;$env:PATH\"; .\\\\gradlew.bat compileJava)",
-      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\hhj48\\\\.jdks\\\\temurin-17.0.19\"; $env:PATH = \"$env:JAVA_HOME\\\\bin;$env:PATH\"; .\\\\gradlew.bat compileJava --console=plain)"
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\hhj48\\\\.jdks\\\\temurin-17.0.19\"; $env:PATH = \"$env:JAVA_HOME\\\\bin;$env:PATH\"; .\\\\gradlew.bat compileJava --console=plain)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\hhj48\\\\.jdks\\\\temurin-17.0.19\"; .\\\\gradlew compileJava)"
     ]
   }
 }

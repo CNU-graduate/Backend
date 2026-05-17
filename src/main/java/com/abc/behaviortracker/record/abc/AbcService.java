@@ -7,6 +7,7 @@ import com.abc.behaviortracker.record.abc.domain.AbcRecord;
 import com.abc.behaviortracker.record.abc.domain.AbcRecordRepository;
 import com.abc.behaviortracker.record.abc.dto.AbcCreateRequest;
 import com.abc.behaviortracker.record.abc.dto.AbcResponse;
+import com.abc.behaviortracker.record.abc.dto.AbcUpdateRequest;
 import com.abc.behaviortracker.record.abc.exception.AbcRecordAlreadyExistsException;
 import com.abc.behaviortracker.record.abc.exception.AbcRecordNotFoundException;
 import com.abc.behaviortracker.record.abc.exception.InvalidSessionStateForAbcException;
@@ -65,6 +66,47 @@ public class AbcService {
 
         AbcRecord abcRecord = abcRecordRepository.findBySessionId(sessionId)
                 .orElseThrow(AbcRecordNotFoundException::new);
+
+        return AbcResponse.from(abcRecord);
+    }
+
+    @Transactional
+    public AbcResponse update(Long sessionId, Long teacherId, AbcUpdateRequest request) {
+        // 1. 모든 필드 null이면 거부 (no-op 요청 차단)
+        if (request.isEmpty()) {
+            throw new BusinessException(
+                    ErrorCode.INVALID_REQUEST,
+                    "수정할 필드가 하나 이상 필요합니다"
+            );
+        }
+
+        // 2. 세션 권한 체크
+        RecordSession session = findSessionOwnedBy(sessionId, teacherId);
+
+        // 3. 세션 상태 체크: ENDED, COMPLETED, INCOMPLETE만 허용
+        SessionStatus status = session.getStatus();
+        if (status != SessionStatus.ENDED
+                && status != SessionStatus.COMPLETED
+                && status != SessionStatus.INCOMPLETE) {
+            throw new InvalidSessionStateForAbcException(status);
+        }
+
+        // 4. ABC 조회
+        AbcRecord abcRecord = abcRecordRepository.findBySessionId(sessionId)
+                .orElseThrow(AbcRecordNotFoundException::new);
+
+        // 5. PATCH 시맨틱으로 내용 수정 (Dirty Checking)
+        abcRecord.updateContent(request.contentA(), request.contentB(), request.contentC());
+
+        // 6. 세션 상태 재계산 (멱등 보장 — 같은 상태면 markXxx가 early return)
+        if (abcRecord.isComplete()) {
+            session.markCompleted();
+        } else {
+            session.markIncomplete();
+        }
+
+        log.info("ABC 수정: sessionId={}, teacherId={}, complete={}, sessionStatus={}",
+                sessionId, teacherId, abcRecord.isComplete(), session.getStatus());
 
         return AbcResponse.from(abcRecord);
     }
