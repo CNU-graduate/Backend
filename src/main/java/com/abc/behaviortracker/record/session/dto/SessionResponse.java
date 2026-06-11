@@ -16,7 +16,8 @@ public record SessionResponse(
         Instant startedAt,
         Instant endedAt,
         Long durationSeconds,
-        boolean mediaAssisted
+        boolean mediaAssisted,
+        String memo
 ) {
     public static SessionResponse from(RecordSession session) {
         Duration duration = session.getDuration();
@@ -29,7 +30,8 @@ public record SessionResponse(
                 session.getStartedAt(),
                 session.getEndedAt(),
                 duration != null ? duration.getSeconds() : null,
-                session.isMediaAssisted()
+                session.isMediaAssisted(),
+                session.getMemo()
         );
     }
 }

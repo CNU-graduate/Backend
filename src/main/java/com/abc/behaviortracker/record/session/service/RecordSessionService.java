@@ -8,6 +8,7 @@ import com.abc.behaviortracker.record.session.domain.SessionStatus;
 import com.abc.behaviortracker.record.session.dto.SessionAbandonRequest;
 import com.abc.behaviortracker.record.session.dto.SessionResponse;
 import com.abc.behaviortracker.record.session.dto.SessionStartRequest;
+import com.abc.behaviortracker.record.session.dto.SessionUpdateRequest;
 import com.abc.behaviortracker.record.session.repository.RecordSessionRepository;
 import com.abc.behaviortracker.student.StudentNotFoundException;
 import com.abc.behaviortracker.student.domain.Student;
@@ -84,16 +85,45 @@ public class RecordSessionService {
         return SessionResponse.from(session);
     }
 
-    public Page<SessionResponse> getList(Long teacherId, Long studentId, Pageable pageable) {
+    public Page<SessionResponse> getList(
+            Long teacherId,
+            Long studentId,
+            SessionStatus status,
+            Instant from,
+            Instant to,
+            Pageable pageable
+    ) {
         findStudentOwnedBy(teacherId, studentId);
 
-        return sessionRepository.findByStudentIdOrderByStartedAtDesc(studentId, pageable)
+        return sessionRepository.findByStudentIdWithFilters(studentId, status, from, to, pageable)
                 .map(SessionResponse::from);
     }
 
     public SessionResponse getDetail(Long teacherId, Long sessionId) {
         RecordSession session = findSessionOwnedBy(teacherId, sessionId);
         return SessionResponse.from(session);
+    }
+
+    @Transactional
+    public SessionResponse updateMemo(Long teacherId, Long sessionId, SessionUpdateRequest request) {
+        RecordSession session = findSessionOwnedBy(teacherId, sessionId);
+
+        if (request.memo() != null) {
+            session.updateMemo(request.memo());
+        }
+
+        log.info("세션 메모 수정: sessionId={}, teacherId={}", sessionId, teacherId);
+
+        return SessionResponse.from(session);
+    }
+
+    @Transactional
+    public void delete(Long teacherId, Long sessionId) {
+        RecordSession session = findSessionOwnedBy(teacherId, sessionId);
+
+        session.delete();
+
+        log.info("세션 삭제: sessionId={}, teacherId={}", sessionId, teacherId);
     }
 
     private Student findStudentOwnedBy(Long teacherId, Long studentId) {

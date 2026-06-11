@@ -3,9 +3,11 @@ package com.abc.behaviortracker.record.session.controller;
 import com.abc.behaviortracker.global.common.ApiResponse;
 import com.abc.behaviortracker.global.common.PageResponse;
 import com.abc.behaviortracker.global.security.AuthPrincipal;
+import com.abc.behaviortracker.record.session.domain.SessionStatus;
 import com.abc.behaviortracker.record.session.dto.SessionAbandonRequest;
 import com.abc.behaviortracker.record.session.dto.SessionResponse;
 import com.abc.behaviortracker.record.session.dto.SessionStartRequest;
+import com.abc.behaviortracker.record.session.dto.SessionUpdateRequest;
 import com.abc.behaviortracker.record.session.service.RecordSessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,12 +19,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.Instant;
 
 @Slf4j
 @RestController
@@ -69,14 +77,18 @@ public class RecordSessionController {
     }
 
     @Operation(summary = "학생의 행동 기록 세션 목록",
-            description = "지정 학생의 기록 세션을 최신순으로 페이징 조회.")
+            description = "지정 학생의 기록 세션을 최신순으로 페이징 조회. status, from, to 쿼리 파라미터로 필터링 가능 (모두 선택).")
     @GetMapping("/api/v1/students/{studentId}/sessions")
     public ApiResponse<PageResponse<SessionResponse>> getList(
             @AuthenticationPrincipal AuthPrincipal principal,
             @PathVariable Long studentId,
+            @RequestParam(required = false) SessionStatus status,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant from,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant to,
             @PageableDefault(size = 20) Pageable pageable
     ) {
-        Page<SessionResponse> page = sessionService.getList(principal.teacherId(), studentId, pageable);
+        Page<SessionResponse> page = sessionService.getList(
+                principal.teacherId(), studentId, status, from, to, pageable);
         return ApiResponse.ok(PageResponse.from(page));
     }
 
@@ -88,5 +100,27 @@ public class RecordSessionController {
     ) {
         SessionResponse result = sessionService.getDetail(principal.teacherId(), sessionId);
         return ApiResponse.ok(result);
+    }
+
+    @Operation(summary = "세션 메모 수정",
+            description = "PATCH 시맨틱: memo가 null이면 변경하지 않음. 빈 문자열은 메모 제거로 해석.")
+    @PatchMapping("/api/v1/sessions/{sessionId}")
+    public ApiResponse<SessionResponse> update(
+            @AuthenticationPrincipal AuthPrincipal principal,
+            @PathVariable Long sessionId,
+            @Valid @RequestBody SessionUpdateRequest request
+    ) {
+        SessionResponse result = sessionService.updateMemo(principal.teacherId(), sessionId, request);
+        return ApiResponse.ok(result);
+    }
+
+    @Operation(summary = "세션 삭제", description = "Soft Delete. deleted_at만 설정되며 실제 데이터는 보존.")
+    @DeleteMapping("/api/v1/sessions/{sessionId}")
+    public ApiResponse<Void> delete(
+            @AuthenticationPrincipal AuthPrincipal principal,
+            @PathVariable Long sessionId
+    ) {
+        sessionService.delete(principal.teacherId(), sessionId);
+        return ApiResponse.ok();
     }
 }

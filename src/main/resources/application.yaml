@@ -50,6 +50,14 @@ app:
     refresh-token-validity-seconds: 1209600    # 14일
     # secret은 프로필별로 오버라이드. local만 기본값 제공.
 
+  weather:
+    # api-key는 프로필별로 오버라이드 (절대 커밋 금지)
+    base-url: https://api.openweathermap.org/data/2.5
+    units: metric
+    lang: kr
+    connect-timeout-ms: 2000
+    read-timeout-ms: 3000
+
 ---
 # =========================================================
 # local 프로필 — 로컬 개발 (H2)
@@ -90,6 +98,8 @@ logging:
 app:
   jwt:
     secret: local-development-secret-key-please-change-me-to-at-least-256-bits-long
+  weather:
+    api-key: ${OPENWEATHER_API_KEY:}
 
 ---
 # =========================================================
@@ -129,6 +139,8 @@ logging:
 app:
   jwt:
     secret: ${JWT_SECRET:dev-secret-change-me-1234567890-abcdefghij-klmnopqrst-uvwxyz}
+  weather:
+    api-key: ${OPENWEATHER_API_KEY:}
 
 ---
 # =========================================================
@@ -167,3 +179,5 @@ logging:
 app:
   jwt:
     secret: ${JWT_SECRET}
+  weather:
+    api-key: ${OPENWEATHER_API_KEY}
