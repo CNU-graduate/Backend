@@ -2,7 +2,6 @@ package com.abc.behaviortracker.student.domain;
 
 import com.abc.behaviortracker.global.common.BaseEntity;
 import com.abc.behaviortracker.teacher.domain.Teacher;
-import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +18,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLRestriction;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
@@ -58,9 +56,8 @@ public class Student extends BaseEntity {
     @Column(name = "iep_summary", columnDefinition = "TEXT")
     private String iepSummary;
 
-    @Type(JsonBinaryType.class)
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "metadata", columnDefinition = "jsonb")
+    @Column(name = "metadata")
     private Map<String, Object> metadata = new HashMap<>();
 
     @Builder
@@ -74,9 +71,16 @@ public class Student extends BaseEntity {
         this.metadata = metadata != null ? new HashMap<>(metadata) : new HashMap<>();
     }
 
-    public void update(Integer grade, String iepSummary, Map<String, Object> metadata) {
+    public void update(String name, Integer grade, LocalDate birthDate,
+                       String iepSummary, Map<String, Object> metadata) {
+        if (name != null) {
+            this.name = name;
+        }
         if (grade != null) {
             this.grade = grade;
+        }
+        if (birthDate != null) {
+            this.birthDate = birthDate;
         }
         if (iepSummary != null) {
             this.iepSummary = iepSummary;

@@ -1,0 +1,357 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :resolveMainClassName
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.14)
+
+2026-06-11T15:17:09.446+09:00  INFO 2208 --- [behavior-tracker] [           main] c.a.b.BehaviorTrackerApplication         : Starting BehaviorTrackerApplication using Java 17.0.6 with PID 2208 (C:\Users\USER\Desktop\jiaebae.github.io\Backend\build\classes\java\main started by USER in C:\Users\USER\Desktop\jiaebae.github.io\Backend)
+2026-06-11T15:17:09.448+09:00 DEBUG 2208 --- [behavior-tracker] [           main] c.a.b.BehaviorTrackerApplication         : Running with Spring Boot v3.5.14, Spring v6.2.18
+2026-06-11T15:17:09.449+09:00  INFO 2208 --- [behavior-tracker] [           main] c.a.b.BehaviorTrackerApplication         : The following 1 profile is active: "local"
+2026-06-11T15:17:10.681+09:00  INFO 2208 --- [behavior-tracker] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-11T15:17:10.766+09:00  INFO 2208 --- [behavior-tracker] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 75 ms. Found 4 JPA repository interfaces.
+2026-06-11T15:17:11.533+09:00  INFO 2208 --- [behavior-tracker] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-11T15:17:11.553+09:00  INFO 2208 --- [behavior-tracker] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-11T15:17:11.554+09:00  INFO 2208 --- [behavior-tracker] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.54]
+2026-06-11T15:17:11.641+09:00  INFO 2208 --- [behavior-tracker] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-11T15:17:11.643+09:00  INFO 2208 --- [behavior-tracker] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2148 ms
+2026-06-11T15:17:11.808+09:00 DEBUG 2208 --- [behavior-tracker] [           main] c.a.b.g.s.JwtAuthenticationFilter        : Filter 'jwtAuthenticationFilter' configured for use
+2026-06-11T15:17:11.961+09:00  INFO 2208 --- [behavior-tracker] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-11T15:17:12.035+09:00  INFO 2208 --- [behavior-tracker] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.49.Final
+2026-06-11T15:17:12.076+09:00  INFO 2208 --- [behavior-tracker] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-11T15:17:12.216+09:00  INFO 2208 --- [behavior-tracker] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-11T15:17:12.448+09:00  INFO 2208 --- [behavior-tracker] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:behaviortracker user=SA
+2026-06-11T15:17:12.451+09:00  INFO 2208 --- [behavior-tracker] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-11T15:17:12.494+09:00  WARN 2208 --- [behavior-tracker] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-11T15:17:12.531+09:00  INFO 2208 --- [behavior-tracker] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-11T15:17:13.078+09:00  INFO 2208 --- [behavior-tracker] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-11T15:17:15.727+09:00  INFO 2208 --- [behavior-tracker] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-11T15:17:15.765+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    drop table if exists record_sessions cascade 
+Hibernate: 
+    drop table if exists record_sessions cascade 
+2026-06-11T15:17:15.773+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    drop table if exists session_media cascade 
+Hibernate: 
+    drop table if exists session_media cascade 
+2026-06-11T15:17:15.774+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    drop table if exists students cascade 
+Hibernate: 
+    drop table if exists students cascade 
+2026-06-11T15:17:15.775+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    drop table if exists teachers cascade 
+Hibernate: 
+    drop table if exists teachers cascade 
+2026-06-11T15:17:15.785+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    create table record_sessions (
+        media_assisted boolean not null,
+        created_at timestamp(6) with time zone not null,
+        deleted_at timestamp(6) with time zone,
+        ended_at timestamp(6) with time zone,
+        session_id bigint generated by default as identity,
+        started_at timestamp(6) with time zone not null,
+        student_id bigint not null,
+        teacher_id bigint not null,
+        updated_at timestamp(6) with time zone not null,
+        status enum ('ABANDONED','COMPLETED','ENDED','INCOMPLETE','INIT','RECORDING') not null,
+        trigger_type enum ('MANUAL','NOISE','SWIPE') not null,
+        primary key (session_id)
+    )
+Hibernate: 
+    create table record_sessions (
+        media_assisted boolean not null,
+        created_at timestamp(6) with time zone not null,
+        deleted_at timestamp(6) with time zone,
+        ended_at timestamp(6) with time zone,
+        session_id bigint generated by default as identity,
+        started_at timestamp(6) with time zone not null,
+        student_id bigint not null,
+        teacher_id bigint not null,
+        updated_at timestamp(6) with time zone not null,
+        status enum ('ABANDONED','COMPLETED','ENDED','INCOMPLETE','INIT','RECORDING') not null,
+        trigger_type enum ('MANUAL','NOISE','SWIPE') not null,
+        primary key (session_id)
+    )
+2026-06-11T15:17:15.809+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    create table session_media (
+        created_at timestamp(6) with time zone not null,
+        deleted_at timestamp(6) with time zone,
+        file_size_bytes bigint not null,
+        media_id bigint generated by default as identity,
+        recording_ended_at timestamp(6) with time zone not null,
+        recording_started_at timestamp(6) with time zone not null,
+        session_id bigint not null,
+        updated_at timestamp(6) with time zone not null,
+        mime_type varchar(100),
+        storage_path varchar(500) not null,
+        file_name varchar(255) not null,
+        media_type enum ('AUDIO','VIDEO') not null,
+        primary key (media_id),
+        constraint uk_session_media_session_type unique (session_id, media_type)
+    )
+Hibernate: 
+    create table session_media (
+        created_at timestamp(6) with time zone not null,
+        deleted_at timestamp(6) with time zone,
+        file_size_bytes bigint not null,
+        media_id bigint generated by default as identity,
+        recording_ended_at timestamp(6) with time zone not null,
+        recording_started_at timestamp(6) with time zone not null,
+        session_id bigint not null,
+        updated_at timestamp(6) with time zone not null,
+        mime_type varchar(100),
+        storage_path varchar(500) not null,
+        file_name varchar(255) not null,
+        media_type enum ('AUDIO','VIDEO') not null,
+        primary key (media_id),
+        constraint uk_session_media_session_type unique (session_id, media_type)
+    )
+2026-06-11T15:17:15.813+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    create table students (
+        birth_date date,
+        grade integer,
+        created_at timestamp(6) with time zone not null,
+        deleted_at timestamp(6) with time zone,
+        student_id bigint generated by default as identity,
+        teacher_id bigint not null,
+        updated_at timestamp(6) with time zone not null,
+        name varchar(50) not null,
+        iep_summary TEXT,
+        metadata json,
+        primary key (student_id),
+        constraint uk_students_teacher_name_birth unique (teacher_id, name, birth_date)
+    )
+Hibernate: 
+    create table students (
+        birth_date date,
+        grade integer,
+        created_at timestamp(6) with time zone not null,
+        deleted_at timestamp(6) with time zone,
+        student_id bigint generated by default as identity,
+        teacher_id bigint not null,
+        updated_at timestamp(6) with time zone not null,
+        name varchar(50) not null,
+        iep_summary TEXT,
+        metadata json,
+        primary key (student_id),
+        constraint uk_students_teacher_name_birth unique (teacher_id, name, birth_date)
+    )
+2026-06-11T15:17:15.817+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    create table teachers (
+        created_at timestamp(6) with time zone not null,
+        deleted_at timestamp(6) with time zone,
+        teacher_id bigint generated by default as identity,
+        updated_at timestamp(6) with time zone not null,
+        name varchar(50) not null,
+        class_name varchar(100),
+        email varchar(100) not null unique,
+        password_hash varchar(100) not null,
+        school_name varchar(100),
+        role enum ('ADMIN','TEACHER') not null,
+        primary key (teacher_id)
+    )
+Hibernate: 
+    create table teachers (
+        created_at timestamp(6) with time zone not null,
+        deleted_at timestamp(6) with time zone,
+        teacher_id bigint generated by default as identity,
+        updated_at timestamp(6) with time zone not null,
+        name varchar(50) not null,
+        class_name varchar(100),
+        email varchar(100) not null unique,
+        password_hash varchar(100) not null,
+        school_name varchar(100),
+        role enum ('ADMIN','TEACHER') not null,
+        primary key (teacher_id)
+    )
+2026-06-11T15:17:15.822+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    create index idx_sessions_student_started 
+       on record_sessions (student_id, started_at desc)
+Hibernate: 
+    create index idx_sessions_student_started 
+       on record_sessions (student_id, started_at desc)
+2026-06-11T15:17:15.825+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    create index idx_sessions_teacher_status 
+       on record_sessions (teacher_id, status)
+Hibernate: 
+    create index idx_sessions_teacher_status 
+       on record_sessions (teacher_id, status)
+2026-06-11T15:17:15.826+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    create index idx_session_media_session 
+       on session_media (session_id)
+Hibernate: 
+    create index idx_session_media_session 
+       on session_media (session_id)
+2026-06-11T15:17:15.828+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    alter table if exists record_sessions 
+       add constraint FKayp6dgxq1c9m7ep10uhlrbcw0 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists record_sessions 
+       add constraint FKayp6dgxq1c9m7ep10uhlrbcw0 
+       foreign key (student_id) 
+       references students
+2026-06-11T15:17:15.856+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    alter table if exists record_sessions 
+       add constraint FKm8ofow3dhfa74wbpxgwkvgsuw 
+       foreign key (teacher_id) 
+       references teachers
+Hibernate: 
+    alter table if exists record_sessions 
+       add constraint FKm8ofow3dhfa74wbpxgwkvgsuw 
+       foreign key (teacher_id) 
+       references teachers
+2026-06-11T15:17:15.859+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    alter table if exists session_media 
+       add constraint FKnorfq4f6q2swu5xrti36k1jut 
+       foreign key (session_id) 
+       references record_sessions
+Hibernate: 
+    alter table if exists session_media 
+       add constraint FKnorfq4f6q2swu5xrti36k1jut 
+       foreign key (session_id) 
+       references record_sessions
+2026-06-11T15:17:15.862+09:00 DEBUG 2208 --- [behavior-tracker] [           main] org.hibernate.SQL                        : 
+    alter table if exists students 
+       add constraint FKbrb7umgbkqrmj9lfwkf0p2r7r 
+       foreign key (teacher_id) 
+       references teachers
+Hibernate: 
+    alter table if exists students 
+       add constraint FKbrb7umgbkqrmj9lfwkf0p2r7r 
+       foreign key (teacher_id) 
+       references teachers
+2026-06-11T15:17:15.873+09:00  INFO 2208 --- [behavior-tracker] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-11T15:17:16.686+09:00  INFO 2208 --- [behavior-tracker] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-11T15:17:17.895+09:00  WARN 2208 --- [behavior-tracker] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-11T15:17:18.575+09:00  INFO 2208 --- [behavior-tracker] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-06-11T15:17:18.632+09:00  WARN 2208 --- [behavior-tracker] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: afca9923-59bc-4eae-996b-ffb488896630
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-06-11T15:17:18.652+09:00  INFO 2208 --- [behavior-tracker] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-06-11T15:17:18.841+09:00 DEBUG 2208 --- [behavior-tracker] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-06-11T15:17:19.199+09:00  INFO 2208 --- [behavior-tracker] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:behaviortracker'
+2026-06-11T15:17:19.308+09:00  INFO 2208 --- [behavior-tracker] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-06-11T15:17:19.319+09:00  INFO 2208 --- [behavior-tracker] [           main] c.a.b.BehaviorTrackerApplication         : Started BehaviorTrackerApplication in 10.382 seconds (process running for 10.746)
+2026-06-11T15:17:25.073+09:00  INFO 2208 --- [behavior-tracker] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-11T15:17:25.075+09:00  INFO 2208 --- [behavior-tracker] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-11T15:17:25.076+09:00  INFO 2208 --- [behavior-tracker] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-11T15:17:25.104+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-06-11T15:17:25.141+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-06-11T15:17:25.153+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-06-11T15:17:40.249+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/v1/auth/signup
+2026-06-11T15:17:40.250+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-06-11T15:17:40.250+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/v1/auth/signup
+2026-06-11T15:17:40.415+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        t1_0.teacher_id 
+    from
+        teachers t1_0 
+    where
+        (
+            t1_0.deleted_at IS NULL
+        ) 
+        and t1_0.email=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        t1_0.teacher_id 
+    from
+        teachers t1_0 
+    where
+        (
+            t1_0.deleted_at IS NULL
+        ) 
+        and t1_0.email=? 
+    fetch
+        first ? rows only
+2026-06-11T15:17:40.419+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (1:VARCHAR) <- [class-link-1781158660082@example.com]
+2026-06-11T15:17:40.420+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (2:INTEGER) <- [1]
+2026-06-11T15:17:40.574+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.SQL                        : 
+    insert 
+    into
+        teachers
+        (class_name, created_at, deleted_at, email, name, password_hash, role, school_name, updated_at, teacher_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        teachers
+        (class_name, created_at, deleted_at, email, name, password_hash, role, school_name, updated_at, teacher_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2026-06-11T15:17:40.576+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (1:VARCHAR) <- [백엔드연결반]
+2026-06-11T15:17:40.576+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (2:TIMESTAMP_UTC) <- [2026-06-11T06:17:40.545095Z]
+2026-06-11T15:17:40.582+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (3:TIMESTAMP_UTC) <- [null]
+2026-06-11T15:17:40.582+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (4:VARCHAR) <- [class-link-1781158660082@example.com]
+2026-06-11T15:17:40.582+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (5:VARCHAR) <- [연동테스트]
+2026-06-11T15:17:40.582+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (6:VARCHAR) <- [$2a$10$9zrTTo6dZ9jfhdjR6F0DkOiMiBnVReJcCiTgA8I3.kfFWcChK/Bl2]
+2026-06-11T15:17:40.582+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (7:ENUM) <- [TEACHER]
+2026-06-11T15:17:40.582+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (8:VARCHAR) <- [테스트학교]
+2026-06-11T15:17:40.582+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter (9:TIMESTAMP_UTC) <- [2026-06-11T06:17:40.545095Z]
+2026-06-11T15:17:40.594+09:00  INFO 2208 --- [behavior-tracker] [nio-8080-exec-3] c.a.b.auth.service.AuthService           : 회원가입 완료: teacherId=1, email=class-link-1781158660082@example.com
+2026-06-11T15:17:40.718+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/v1/auth/login
+2026-06-11T15:17:40.718+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-06-11T15:17:40.719+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/v1/auth/login
+2026-06-11T15:17:40.727+09:00 DEBUG 2208 --- [behavior-tracker] [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        t1_0.teacher_id,
+        t1_0.class_name,
+        t1_0.created_at,
+        t1_0.deleted_at,
+        t1_0.email,
+        t1_0.name,
+        t1_0.password_hash,
+        t1_0.role,
+        t1_0.school_name,
+        t1_0.updated_at 
+    from
+        teachers t1_0 
+    where
+        (
+            t1_0.deleted_at IS NULL
+        ) 
+        and t1_0.email=?
+Hibernate: 
+    select
+        t1_0.teacher_id,
+        t1_0.class_name,
+        t1_0.created_at,
+        t1_0.deleted_at,
+        t1_0.email,
+        t1_0.name,
+        t1_0.password_hash,
+        t1_0.role,
+        t1_0.school_name,
+        t1_0.updated_at 
+    from
+        teachers t1_0 
+    where
+        (
+            t1_0.deleted_at IS NULL
+        ) 
+        and t1_0.email=?
+2026-06-11T15:17:40.728+09:00 TRACE 2208 --- [behavior-tracker] [nio-8080-exec-4] org.hibernate.orm.jdbc.bind              : binding parameter (1:VARCHAR) <- [class-link-1781158660082@example.com]
+2026-06-11T15:17:40.820+09:00  INFO 2208 --- [behavior-tracker] [nio-8080-exec-4] c.a.b.auth.service.AuthService           : 로그인 성공: teacherId=1, email=class-link-1781158660082@example.com

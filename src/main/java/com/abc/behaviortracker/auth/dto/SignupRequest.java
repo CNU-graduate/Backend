@@ -24,5 +24,9 @@ public record SignupRequest(
         String name,
 
         @Size(max = 100, message = "학교 이름은 100자를 초과할 수 없습니다")
-        String schoolName
+        String schoolName,
+
+        @NotBlank(message = "Class name is required")
+        @Size(max = 100, message = "Class name must not exceed 100 characters")
+        String className
 ) {}

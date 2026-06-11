@@ -9,6 +9,7 @@ public record TeacherDto(
         String email,
         String name,
         String schoolName,
+        String className,
         String role,
         Instant createdAt
 ) {
@@ -18,6 +19,7 @@ public record TeacherDto(
                 teacher.getEmail(),
                 teacher.getName(),
                 teacher.getSchoolName(),
+                teacher.getClassName(),
                 teacher.getRole().name(),
                 teacher.getCreatedAt()
         );

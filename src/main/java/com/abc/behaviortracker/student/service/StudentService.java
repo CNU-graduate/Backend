@@ -20,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -69,8 +71,23 @@ public class StudentService {
     @Transactional
     public StudentDetailResponse update(Long teacherId, Long studentId, StudentUpdateRequest request) {
         Student student = findStudentOwnedBy(teacherId, studentId);
+        String name = request.name() != null ? request.name().trim() : student.getName();
+        LocalDate birthDate = request.birthDate() != null
+                ? request.birthDate()
+                : student.getBirthDate();
 
-        student.update(request.grade(), request.iepSummary(), request.metadata());
+        if (studentRepository.existsByTeacherIdAndNameAndBirthDateAndIdNot(
+                teacherId, name, birthDate, studentId)) {
+            throw new StudentAlreadyExistsException(name);
+        }
+
+        student.update(
+                name,
+                request.grade(),
+                birthDate,
+                request.iepSummary(),
+                request.metadata()
+        );
 
         log.info("학생 수정 완료: studentId={}, teacherId={}", studentId, teacherId);
 

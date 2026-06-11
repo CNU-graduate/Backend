@@ -23,4 +23,11 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     );
 
     boolean existsByTeacherIdAndNameAndBirthDate(Long teacherId, String name, LocalDate birthDate);
+
+    boolean existsByTeacherIdAndNameAndBirthDateAndIdNot(
+            Long teacherId,
+            String name,
+            LocalDate birthDate,
+            Long studentId
+    );
 }

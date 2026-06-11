@@ -39,16 +39,20 @@ public class Teacher extends BaseEntity {
     @Column(name = "school_name", length = 100)
     private String schoolName;
 
+    @Column(name = "class_name", length = 100)
+    private String className;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 20)
     private TeacherRole role;
 
     @Builder
-    private Teacher(String email, String passwordHash, String name, String schoolName, TeacherRole role) {
+    private Teacher(String email, String passwordHash, String name, String schoolName, String className, TeacherRole role) {
         this.email = email;
         this.passwordHash = passwordHash;
         this.name = name;
         this.schoolName = schoolName;
+        this.className = className;
         this.role = (role != null) ? role : TeacherRole.TEACHER;
     }
 

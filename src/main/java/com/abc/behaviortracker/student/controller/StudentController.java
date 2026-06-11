@@ -21,11 +21,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,8 +72,14 @@ public class StudentController {
         return ApiResponse.ok(result);
     }
 
-    @Operation(summary = "학생 수정", description = "PATCH 시맨틱: null 필드는 변경하지 않음. name/birthDate는 수정 불가.")
-    @PatchMapping("/{studentId}")
+    @Operation(
+            summary = "학생 수정",
+            description = "PATCH/PUT 지원. null 필드는 기존 값을 유지하며 이름과 생년월일도 수정할 수 있습니다."
+    )
+    @RequestMapping(
+            value = "/{studentId}",
+            method = {RequestMethod.PATCH, RequestMethod.PUT}
+    )
     public ApiResponse<StudentDetailResponse> update(
             @AuthenticationPrincipal AuthPrincipal principal,
             @PathVariable Long studentId,

@@ -43,6 +43,7 @@ public class AuthService {
                 .passwordHash(passwordHash)
                 .name(request.name())
                 .schoolName(request.schoolName())
+                .className(request.className())
                 .role(TeacherRole.TEACHER)
                 .build();
 
