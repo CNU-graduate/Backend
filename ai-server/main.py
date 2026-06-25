@@ -21,6 +21,8 @@ from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
 from ultralytics import YOLO
 
+from behavior import classify_behavior
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("ai-server")
 
@@ -86,6 +88,8 @@ def _analyze_video(video_path: Path) -> dict:
 
     fps = cap.get(cv2.CAP_PROP_FPS) or 0.0
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) or 0)
+    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) or 0)
 
     frames_result: list[dict] = []
     frame_idx = -1
@@ -160,10 +164,18 @@ def _analyze_video(video_path: Path) -> dict:
     finally:
         cap.release()
 
+    # 규칙 기반 행동 분류 (사람/keypoint 가 없어도 예외 없이 '미분류' 반환)
+    behavior = classify_behavior(frames_result, frame_width, frame_height)
+
     return {
+        # 최상위 행동 분류 필드:
+        # detectedBehavior, confidence, draftText, behaviorReason
+        **behavior,
         "video": {
             "fps": round(fps, 3),
             "total_frames": total_frames,
+            "frame_width": frame_width,
+            "frame_height": frame_height,
             "frame_stride": FRAME_STRIDE,
             "analyzed_frames": len(frames_result),
         },
