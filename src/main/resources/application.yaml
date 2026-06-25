@@ -50,6 +50,15 @@ app:
     refresh-token-validity-seconds: 1209600    # 14일
     # secret은 프로필별로 오버라이드. local만 기본값 제공.
 
+# ===== 외부 AI 분석 서버(ai-server) 연동 =====
+# ai-server 스펙 미확정. 현재는 더미 URL 기준. 환경별로 base-url 오버라이드 가능.
+ai:
+  server:
+    base-url: ${AI_SERVER_BASE_URL:http://localhost:8000}
+    analyze-path: /analyze
+    connect-timeout: 5s
+    read-timeout: 5s
+
 ---
 # =========================================================
 # local 프로필 — 로컬 개발 (H2)
