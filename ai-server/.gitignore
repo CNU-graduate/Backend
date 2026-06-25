@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# YOLO 모델 가중치 (런타임에 자동 다운로드)
+*.pt
+
+# 업로드 임시 파일
+ai-server-uploads/
+
+# 환경 설정
+.env
