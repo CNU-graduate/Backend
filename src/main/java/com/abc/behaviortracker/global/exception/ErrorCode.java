@@ -40,7 +40,10 @@ public enum ErrorCode {
     // ===== ABC (US-09) =====
     ABC_RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "ABC_RECORD_NOT_FOUND", "ABC 기록을 찾을 수 없습니다"),
     ABC_RECORD_ALREADY_EXISTS(HttpStatus.CONFLICT, "ABC_RECORD_ALREADY_EXISTS", "해당 세션에 이미 ABC 기록이 존재합니다"),
-    INVALID_SESSION_STATE_FOR_ABC(HttpStatus.CONFLICT, "INVALID_SESSION_STATE_FOR_ABC", "ABC 입력이 불가능한 세션 상태입니다");
+    INVALID_SESSION_STATE_FOR_ABC(HttpStatus.CONFLICT, "INVALID_SESSION_STATE_FOR_ABC", "ABC 입력이 불가능한 세션 상태입니다"),
+
+    // ===== AI 분석 (ai-server 연동) =====
+    AI_ANALYSIS_FAILED(HttpStatus.BAD_GATEWAY, "AI_ANALYSIS_FAILED", "AI 분석 서버 호출에 실패했습니다");
 
     private final HttpStatus status;
     private final String code;

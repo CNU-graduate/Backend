@@ -11,7 +11,11 @@
       "PowerShell(Test-Path *)",
       "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\hhj48\\\\.jdks\\\\temurin-17.0.19\"; $env:PATH = \"$env:JAVA_HOME\\\\bin;$env:PATH\"; .\\\\gradlew.bat compileJava)",
       "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\hhj48\\\\.jdks\\\\temurin-17.0.19\"; $env:PATH = \"$env:JAVA_HOME\\\\bin;$env:PATH\"; .\\\\gradlew.bat compileJava --console=plain)",
-      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\hhj48\\\\.jdks\\\\temurin-17.0.19\"; .\\\\gradlew compileJava)"
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\hhj48\\\\.jdks\\\\temurin-17.0.19\"; .\\\\gradlew compileJava)",
+      "PowerShell($dirs = @\\(\"$env:JAVA_HOME\",\"C:\\\\Program Files\\\\Java\",\"C:\\\\Program Files\\\\Eclipse Adoptium\",\"$env:LOCALAPPDATA\\\\Programs\\\\Eclipse Adoptium\",\"$env:USERPROFILE\\\\.jdks\",\"$env:USERPROFILE\\\\.gradle\\\\jdks\",\"C:\\\\Program Files\\\\Microsoft\",\"C:\\\\Program Files\\\\Amazon Corretto\"\\); foreach \\($d in $dirs\\) { if \\($d -and \\(Test-Path $d\\)\\) { Get-ChildItem -Path $d -Filter \"java.exe\" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 5 -ExpandProperty FullName } })",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\hhj48\\\\.jdks\\\\temurin-17.0.19\"; .\\\\gradlew.bat compileJava --console=plain -q)",
+      "PowerShell(git *)",
+      "PowerShell($p = \"src/main/java/com/abc/behaviortracker/global/exception/ErrorCode.java\"; $raw = [System.IO.File]::ReadAllText\\($p\\); $lf = $raw -replace \"`r`n\", \"`n\"; $enc = New-Object System.Text.UTF8Encoding\\($false\\); [System.IO.File]::WriteAllText\\($p, $lf, $enc\\); Write-Output \"normalized to LF\"; git -c core.autocrlf=false diff --stat -- $p)"
     ]
   }
 }
