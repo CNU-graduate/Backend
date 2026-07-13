@@ -2,6 +2,7 @@ package com.abc.behaviortracker.analytics.service;
 
 import com.abc.behaviortracker.analytics.dto.AnalysisSummaryResponse;
 import com.abc.behaviortracker.analytics.dto.FrequencyItem;
+import com.abc.behaviortracker.analytics.dto.FrequencyItemResponse;
 import com.abc.behaviortracker.analytics.dto.HourlyCount;
 import com.abc.behaviortracker.analytics.dto.HourlyDistributionResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -49,15 +50,16 @@ class AnalyticsSummaryServiceTest {
     }
 
     @Test
-    @DisplayName("시간대/행동 분석 결과를 조립하고, totalRecordCount는 분포 합계와 일치한다")
+    @DisplayName("시간대/행동 빈도 분석 결과를 조립하고, 최다 항목은 빈도 리스트의 첫 항목을 사용한다")
     void assemblesSummaryReusingSubServices() {
         List<HourlyCount> dist = distributionWith(9, 2, 13, 1);
         when(hourlyAnalyticsService.getDistribution(TEACHER_ID, STUDENT_ID))
                 .thenReturn(new HourlyDistributionResponse(dist, new HourlyCount(9, 2)));
-        when(behaviorAnalyticsService.getMostFrequentBehavior(TEACHER_ID, STUDENT_ID))
-                .thenReturn(new FrequencyItem("자리 이탈", 8));
-        when(behaviorAnalyticsService.getMostFrequentAntecedent(TEACHER_ID, STUDENT_ID))
-                .thenReturn(new FrequencyItem("과제 수행", 10));
+        // 빈도 리스트는 내림차순 정렬 — 첫 항목이 최다. 요약은 첫 항목만 사용한다.
+        when(behaviorAnalyticsService.getBehaviorFrequency(TEACHER_ID, STUDENT_ID, null, null))
+                .thenReturn(List.of(new FrequencyItemResponse("자리 이탈", 8), new FrequencyItemResponse("떠들기", 3)));
+        when(behaviorAnalyticsService.getAntecedentFrequency(TEACHER_ID, STUDENT_ID, null, null))
+                .thenReturn(List.of(new FrequencyItemResponse("과제 수행", 10)));
 
         AnalysisSummaryResponse res = analyticsSummaryService.getSummary(TEACHER_ID, STUDENT_ID);
 
@@ -74,8 +76,10 @@ class AnalyticsSummaryServiceTest {
         List<HourlyCount> dist = emptyDistribution();
         when(hourlyAnalyticsService.getDistribution(TEACHER_ID, STUDENT_ID))
                 .thenReturn(new HourlyDistributionResponse(dist, null));
-        when(behaviorAnalyticsService.getMostFrequentBehavior(TEACHER_ID, STUDENT_ID)).thenReturn(null);
-        when(behaviorAnalyticsService.getMostFrequentAntecedent(TEACHER_ID, STUDENT_ID)).thenReturn(null);
+        when(behaviorAnalyticsService.getBehaviorFrequency(TEACHER_ID, STUDENT_ID, null, null))
+                .thenReturn(List.of());
+        when(behaviorAnalyticsService.getAntecedentFrequency(TEACHER_ID, STUDENT_ID, null, null))
+                .thenReturn(List.of());
 
         AnalysisSummaryResponse res = analyticsSummaryService.getSummary(TEACHER_ID, STUDENT_ID);
 
