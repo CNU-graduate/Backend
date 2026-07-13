@@ -1,74 +1,90 @@
 package com.abc.behaviortracker.analytics.service;
 
-import com.abc.behaviortracker.analytics.dto.FrequencyItem;
-import com.abc.behaviortracker.record.abc.repository.AbcRecordRepository;
+import com.abc.behaviortracker.analytics.dto.FrequencyItemResponse;
+import com.abc.behaviortracker.analytics.dto.PeriodSummaryResponse;
+import com.abc.behaviortracker.analytics.dto.StatusCountResponse;
+import com.abc.behaviortracker.analytics.repository.AbcRecordAnalyticsRepository;
+import com.abc.behaviortracker.analytics.repository.RecordSessionStatsRepository;
+import com.abc.behaviortracker.global.exception.BusinessException;
+import com.abc.behaviortracker.global.exception.ErrorCode;
+import com.abc.behaviortracker.global.exception.ForbiddenAccessException;
+import com.abc.behaviortracker.student.StudentNotFoundException;
+import com.abc.behaviortracker.student.domain.Student;
+import com.abc.behaviortracker.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedHashMap;
+import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 
-/**
- * 행동/선행사건 빈도 분석.
- *
- * <p>ABC 기록의 행동(content_b)·선행사건(content_a) 텍스트를 집계해 최다 항목을 계산한다.
- * 발생 횟수가 동일한 경우 이름 사전순으로 가장 앞선 값을 반환해 결과를 결정적으로 만든다.
- * 해당 기록이 전혀 없으면 {@code null}을 반환한다.
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class BehaviorAnalyticsService {
 
-    private final AbcRecordRepository abcRecordRepository;
-    private final AnalyticsAccessValidator accessValidator;
+    private final AbcRecordAnalyticsRepository abcRecordAnalyticsRepository;
+    private final RecordSessionStatsRepository recordSessionStatsRepository;
+    private final StudentRepository studentRepository;
 
-    /** 가장 많이 기록된 행동(ABC의 B). 기록이 없으면 null. */
-    public FrequencyItem getMostFrequentBehavior(Long teacherId, Long studentId) {
-        accessValidator.validateOwnership(teacherId, studentId);
-        return mostFrequent(abcRecordRepository.findBehaviorContentsByStudentId(studentId));
+    public List<FrequencyItemResponse> getBehaviorFrequency(
+            Long teacherId, Long studentId, Instant from, Instant to
+    ) {
+        findStudentOwnedBy(teacherId, studentId);
+        validatePeriod(from, to);
+
+        return abcRecordAnalyticsRepository.findBehaviorFrequency(studentId, from, to).stream()
+                .map(p -> new FrequencyItemResponse(p.getLabel(), p.getCount()))
+                .toList();
     }
 
-    /** 가장 많이 기록된 선행사건(ABC의 A). 기록이 없으면 null. */
-    public FrequencyItem getMostFrequentAntecedent(Long teacherId, Long studentId) {
-        accessValidator.validateOwnership(teacherId, studentId);
-        return mostFrequent(abcRecordRepository.findAntecedentContentsByStudentId(studentId));
+    public List<FrequencyItemResponse> getAntecedentFrequency(
+            Long teacherId, Long studentId, Instant from, Instant to
+    ) {
+        findStudentOwnedBy(teacherId, studentId);
+        validatePeriod(from, to);
+
+        return abcRecordAnalyticsRepository.findAntecedentFrequency(studentId, from, to).stream()
+                .map(p -> new FrequencyItemResponse(p.getLabel(), p.getCount()))
+                .toList();
     }
 
-    private FrequencyItem mostFrequent(List<String> contents) {
-        Map<String, Long> countByName = new LinkedHashMap<>();
-        for (String content : contents) {
-            if (content == null) {
-                continue;
-            }
-            String name = content.trim();
-            if (name.isEmpty()) {
-                continue;
-            }
-            countByName.merge(name, 1L, Long::sum);
-        }
+    public PeriodSummaryResponse getPeriodSummary(
+            Long teacherId, Long studentId, Instant from, Instant to
+    ) {
+        findStudentOwnedBy(teacherId, studentId);
+        validatePeriod(from, to);
 
-        FrequencyItem top = null;
-        for (Map.Entry<String, Long> entry : countByName.entrySet()) {
-            if (isHigherRanked(entry, top)) {
-                top = new FrequencyItem(entry.getKey(), entry.getValue());
-            }
-        }
-        return top;
+        List<StatusCountResponse> statusCounts = recordSessionStatsRepository
+                .countSessionsByStatus(studentId, from, to).stream()
+                .map(p -> new StatusCountResponse(p.getStatus(), p.getCount()))
+                .toList();
+
+        long totalSessionCount = statusCounts.stream()
+                .mapToLong(StatusCountResponse::count)
+                .sum();
+        long totalAbcRecordCount = abcRecordAnalyticsRepository.countByStudentAndPeriod(studentId, from, to);
+
+        return new PeriodSummaryResponse(studentId, from, to, totalSessionCount, totalAbcRecordCount, statusCounts);
     }
 
-    /** 후보가 현재 1위보다 우선하는가: 횟수가 더 많거나, 동일 횟수면 이름 사전순이 더 앞선 경우. */
-    private boolean isHigherRanked(Map.Entry<String, Long> candidate, FrequencyItem current) {
-        if (current == null) {
-            return true;
+    private void validatePeriod(Instant from, Instant to) {
+        if (from != null && to != null && from.isAfter(to)) {
+            throw new BusinessException(ErrorCode.INVALID_REQUEST, "from은 to보다 늦을 수 없습니다");
         }
-        if (candidate.getValue() != current.count()) {
-            return candidate.getValue() > current.count();
+    }
+
+    private Student findStudentOwnedBy(Long teacherId, Long studentId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new StudentNotFoundException(studentId));
+
+        if (!student.isOwnedBy(teacherId)) {
+            log.warn("권한 없는 학생 접근: studentId={}, teacherId={}", studentId, teacherId);
+            throw new ForbiddenAccessException();
         }
-        return candidate.getKey().compareTo(current.name()) < 0;
+
+        return student;
     }
 }
